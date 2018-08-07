@@ -197,3 +197,218 @@ This is the first release, in what I hope will be a rather long-running series o
 #### Proof of Work Done
 Insert here the full url of the code used in the tutorial, under your GitHub or a relevant gist, e.g. https://github.com/username/projname
 © 2018 GitHub, Inc.
+
+### FULL CODE BELOW ------- ------ ------ FULL CODE BELOW ------ ------- -------- FULL CODE BELOW
+
+## activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="255dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/buttonBrowser"
+        android:text="NOT YET" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button5"
+        android:text="NOT YET" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button2"
+        android:text="NOT YET" />
+
+    <Button
+        android:id="@+id/buttonBrowser"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="6dp"
+        android:text="BROWSER" />
+</RelativeLayout>
+
+## activity_browser.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".browser">
+
+    <WebView
+        android:id="@+id/browser"
+        android:layout_width="match_parent"
+        android:layout_height="418dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Back" />
+
+    <Button
+        android:id="@+id/buttonForward"
+        android:layout_width="192dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="Forward" />
+
+    <EditText
+        android:id="@+id/adressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/buttonBack"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Address Bar" />
+
+</RelativeLayout>
+
+## MainActivity.java
+package com.example.smiey.steemie;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button buttonBrowse = (Button)findViewById(R.id.buttonBrowser);
+
+        buttonBrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent LaunchBrowser = new Intent (MainActivity.this, browser.class);
+                startActivity(LaunchBrowser);
+            }
+        });
+    }
+
+
+}
+
+## browser.java
+
+package com.example.smiey.steemie;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class browser extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_browser);
+
+        Button buttonBack = (Button)findViewById(R.id.buttonBack);
+        Button buttonForward = (Button)findViewById(R.id.buttonForward);
+        final EditText addressbar = (EditText)findViewById(R.id.adressBar);
+        final WebView browser = (WebView)findViewById(R.id.browser);
+
+        final WebSettings ws = browser.getSettings();
+        ws.setJavaScriptEnabled(true);
+        ws.setDomStorageEnabled(true);
+        browser.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
+
+        browser.setWebChromeClient(new WebChromeClient(){
+
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                addressbar.setText(browser.getUrl().toString());
+            }
+        });
+
+        browser.loadUrl("https://steemit.com/@ceruleanblue");
+        addressbar.setText(browser.getUrl().toString());
+
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (browser.canGoBack()) {
+                    browser.goBack();
+                    addressbar.setText(browser.getUrl().toString());
+                } else {
+                    finish();
+                }
+
+            }
+        });
+
+
+        buttonForward.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (browser.canGoForward()) {
+                    browser.goForward();
+                    addressbar.setText(browser.getUrl().toString());
+                } else {
+                    finish();
+                }
+
+            }
+        });
+
+    }
+
+}
+
+
+//            @Override
+//            public void onProgressChanged(WebView view, int newProgress) {
+//                super.onProgressChanged(view, newProgress);
+//            }
+
