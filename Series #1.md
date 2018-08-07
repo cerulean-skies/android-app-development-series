@@ -299,7 +299,7 @@ Insert here the full url of the code used in the tutorial, under your GitHub or 
 </RelativeLayout>
 
 ## MainActivity.java
-package com.example.smiey.steemie;
+        package com.example.smiey.steemie;
 
         import android.content.Intent;
         import android.support.v7.app.AppCompatActivity;
