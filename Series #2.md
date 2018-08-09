@@ -238,13 +238,187 @@ Cerulean
 
 
 
+### FULL CODE BELOW ----- ------ ------ FULL CODE BELOW ------- ------  -------- FULL CODE BELOW --------------------------
+
+## MainActivity.java
+
+package com.example.smiey.steemie;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button buttonBrowse = (Button)findViewById(R.id.buttonBrowser);
+        Button buttonFollowers = (Button)findViewById(R.id.buttonFollow);
+
+
+        buttonBrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent LaunchBrowser = new Intent (MainActivity.this, browser.class);
+                startActivity(LaunchBrowser);
+            }
+        });
+
+        buttonFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent LaunchFollowers = new Intent (MainActivity.this, followers.class);
+                startActivity(LaunchFollowers);
+            }
+        });
+    }
+
+
+}
+
+
+## fetchdata.java
+
+    package com.example.smiey.steemie;
+
+    import android.os.AsyncTask;
+    import android.support.v7.app.AppCompatActivity;
+    import android.os.Bundle;
+
+    import org.json.JSONArray;
+    import org.json.JSONException;
+    import org.json.JSONObject;
+
+    import java.io.BufferedReader;  
+    import java.io.IOException;
+    import java.io.InputStream;
+    import java.io.InputStreamReader;
+    import java.net.MalformedURLException;
+    import java.net.URL;
+
+    import javax.net.ssl.HttpsURLConnection;
+
+    public class fetchdata extends AsyncTask<Void,Void,Void> {
+
+    String data = "";
+    String dataParsed = "";
+    String singleParsed = "";
+
+    String id;
+    String name;
+    String memo;
+
+    String balanceSteem;
+    String balanceSP;
+    String balanceSBD;
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+
+
+        {
+            try {
+                URL url = new URL("https://steemit.com/@ceruleanblue.json");
+
+                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                InputStream inputStream = httpsURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+
+                String lines = "";
+                while(lines != null){
+                    lines = bufferedReader.readLine();
+                    data = data + lines;
+                }
+
+                JSONObject jo = new JSONObject(data);
+
+                JSONObject user = jo.getJSONObject("user");
+
+                id = user.getString("id"); //like this so on
+                name = user.getString("name");
+                memo = user.getString("memo_key");
+
+                balanceSteem = user.getString("balance");
+                balanceSP = user.getString("vesting_shares");
+                balanceSBD = user.getString("sbd_balance");
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+
+        followers.dataTV.setText("ID: "+this.id);
+        followers.nameTV.setText("Username: "+this.name);
+        followers.memoTV.setText("Memo Key: "+this.memo);
+
+        followers.balanceSteemTV.setText("STEEM Balance: "+this.balanceSteem);
+        followers.balanceSPTV.setText("Vesting Balance: "+ this.balanceSP);
+        followers.balanceSBDTV.setText("SBD Balance: "+this.balanceSBD);
+
+    }
+    
+    
+## followers.java
+
+    package com.example.smiey.steemie;
+
+    import android.support.v7.app.AppCompatActivity;
+    import android.os.Bundle;
+    import android.widget.ListView;
+    import android.widget.TextView;
+
+    public class followers extends AppCompatActivity {
+    public static TextView dataTV;
+    public static TextView nameTV;
+    public static TextView memoTV;
+
+    public static TextView balanceSteemTV;
+    public static TextView balanceSPTV;
+    public static TextView balanceSBDTV;
 
 
 
-#### Curriculum
-This is the 2nd release in this series - Much more to come.
-- [Android App Development Series #1 - Basic Web Browser
-](https://steemit.com/utopian-io/@ceruleanblue/android-app-development-series-1-basic-web-browser)
 
-#### Proof of Work Done
-Insert here the full url of the code used in the tutorial, under your GitHub or a relevant gist, e.g. https://github.com/username/projnam
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_followers);
+
+        nameTV= (TextView)findViewById(R.id.followersTVname);
+        dataTV = (TextView)findViewById(R.id.followersTVid);
+        memoTV = (TextView)findViewById(R.id.followersTVmemo);
+
+        balanceSteemTV = (TextView)findViewById(R.id.followTVbalanceSTEEM);
+        balanceSPTV = (TextView)findViewById(R.id.followTVbalanceSP);
+        balanceSBDTV = (TextView)findViewById(R.id.followTVbalanceSBD);
+
+
+
+        fetchdata process = new fetchdata();
+        process.execute();
+
+
+    }
+    }
+
+
+
+
+
+
