@@ -38,15 +38,14 @@ Since we are doing this tutorial using the same application as before, I will be
 
 ## Changes - fetchdata.java
 
-<center>![listv1.PNG](https://cdn.steemitimages.com/DQmULs4foZh19mvHiKpknsCDbogE8tZgRNCjHVy3Pu15JEA/listv1.PNG)<br>
-[Screenshot](https://cdn.steemitimages.com/DQmULs4foZh19mvHiKpknsCDbogE8tZgRNCjHVy3Pu15JEA/listv1.PNG)</center>
+![listv1.PNG](https://cdn.steemitimages.com/DQmULs4foZh19mvHiKpknsCDbogE8tZgRNCjHVy3Pu15JEA/listv1.PNG)
 
 As you can see in the image above, I have highlighted the things I have changed from our previous code. In this new version of fetchdata.java, we have created a 'user' String, as well as changed our fixed URL, to include our variable. Above our URL,  we have three new lines. In the first, we create a string, and set its value to the text that is contained within our EditText 'searchBar', from the followers activity.
 
 The next line, is an empty if loop, that says to do nothing if the searchBar is empty, preceding an else statement, which dictates that if the searchBar is anything other than empty, to change our 'user' String to the value of the new text retrieved.
 
-<center>![listv2.PNG](https://cdn.steemitimages.com/DQmVX8wf2HEUMPvQ4rKnvzaxBQVZVyxvu3gRj8Aft1Xeviz/listv2.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmVX8wf2HEUMPvQ4rKnvzaxBQVZVyxvu3gRj8Aft1Xeviz/listv2.PNG)</center>
+![listv2.PNG](https://cdn.steemitimages.com/DQmVX8wf2HEUMPvQ4rKnvzaxBQVZVyxvu3gRj8Aft1Xeviz/listv2.PNG)
+
 
 You will see in the GitHub version of this tut(Linked Below), that I have changed the XML layout file for followers.xml, so as to include a Search Bar, and 2 Buttons. The bar to contain a users name, one button to search for the new user, and another to add this new user to a list of people that you are currently following. The above image depicts some strings I have changed in fetchdata.java, as well as the one below.
 
