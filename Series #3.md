@@ -165,7 +165,6 @@ Happy Hunting,
 Cerulean
 
 
-
 #### Curriculum
 This is the 3rd release in this series.
 
@@ -174,7 +173,8 @@ This is the 3rd release in this series.
 
 
 #### Proof of Work Done
-Insert here the full u
+https://github.com/cerulean-skies/android-app-development-series/blob/master/Series%20%233.md
+
 
 ############ CODE FOLLOWS BELOW ############ CODE FOLLOWS BELOW ############ CODE FOLLOWS BELOW ############ CODE FOLLOWS BELOW
 
