@@ -180,8 +180,8 @@ https://github.com/cerulean-skies/android-app-development-series/blob/master/Ser
 
 # activity_followers.xml 
 
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -321,12 +321,12 @@ https://github.com/cerulean-skies/android-app-development-series/blob/master/Ser
         android:layout_alignTop="@+id/SearchButtonFOLLOWERS"
         android:text="Follow User!" />
 
-</RelativeLayout>
+    </RelativeLayout>
 
 # FollowersRow.xml
 
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -346,12 +346,12 @@ https://github.com/cerulean-skies/android-app-development-series/blob/master/Ser
         android:layout_weight="1"
         android:text="Remove From Following"
         android:textSize="12sp" />
-</LinearLayout>
+    </LinearLayout>
 
 # activity_followers_list.xml
 
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -371,25 +371,25 @@ https://github.com/cerulean-skies/android-app-development-series/blob/master/Ser
         android:layout_weight="1"
         android:text="Remove From Following"
         android:textSize="12sp" />
-</LinearLayout>
+    </LinearLayout>
 
 # FollowersList.java
 
-package com.example.smiey.steemie;
+    package com.example.smiey.steemie;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+    import android.content.SharedPreferences;
+    import android.preference.PreferenceManager;
+    import android.support.v7.app.AppCompatActivity;
+    import android.os.Bundle;
+    import android.widget.ArrayAdapter;
+    import android.widget.ListAdapter;
+    import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
+    import java.util.ArrayList;
+    import java.util.List;
 
 
-public class FollowersList extends AppCompatActivity {
+    public class FollowersList extends AppCompatActivity {
 
     ListView followList;
     public String[] test;
@@ -414,22 +414,22 @@ public class FollowersList extends AppCompatActivity {
         }
     }
 
-}
+    }
 
 # Followers.java
 
-package com.example.smiey.steemie;
+    package com.example.smiey.steemie;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
+    import android.content.Intent;
+    import android.support.v7.app.AppCompatActivity;
+    import android.os.Bundle;
+    import android.view.View;
+    import android.widget.Button;
+    import android.widget.EditText;
+    import android.widget.ListView;
+    import android.widget.TextView;
 
-public class followers extends AppCompatActivity {
+    public class followers extends AppCompatActivity {
     public static TextView dataTV;
     public static TextView nameTV;
     public static TextView memoTV;
@@ -489,34 +489,31 @@ public class followers extends AppCompatActivity {
         });
 
     }
-}
+    }
 
-
-
-//        ListView followList = (ListView)findViewById(R.id.followList);
 
 # fetchdata.java
 
-package com.example.smiey.steemie;
+    package com.example.smiey.steemie;
 
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+    import android.os.AsyncTask;
+    import android.support.v7.app.AppCompatActivity;
+    import android.os.Bundle;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+    import org.json.JSONArray;
+    import org.json.JSONException;
+    import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+    import java.io.BufferedReader;
+    import java.io.IOException;
+    import java.io.InputStream;
+    import java.io.InputStreamReader;
+    import java.net.MalformedURLException;
+    import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
+    import javax.net.ssl.HttpsURLConnection;
 
-public class fetchdata extends AsyncTask<Void,Void,Void> {
+    public class fetchdata extends AsyncTask<Void,Void,Void> {
 
     String data = "";
 
@@ -591,24 +588,24 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
     }
 
-}
+    }
 
 
 # CustomAdapter.java
 
-package com.example.smiey.steemie;
+        package com.example.smiey.steemie;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.TextView;
+        import android.content.Context;
+        import android.support.annotation.NonNull;
+        import android.support.annotation.Nullable;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.ArrayAdapter;
+        import android.widget.Button;
+        import android.widget.TextView;
 
-public class CustomAdapter extends ArrayAdapter<String> {
+        public class CustomAdapter extends ArrayAdapter<String> {
 
     public CustomAdapter(@NonNull Context context, String[] items) {
         super(context, R.layout.followers_row, items);
@@ -631,5 +628,5 @@ public class CustomAdapter extends ArrayAdapter<String> {
 
 
     }
-}
+    }
 
