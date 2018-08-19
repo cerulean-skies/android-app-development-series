@@ -49,20 +49,17 @@ The next line, is an empty if loop, that says to do nothing if the searchBar is 
 
 You will see in the GitHub version of this tut(Linked Below), that I have changed the XML layout file for followers.xml, so as to include a Search Bar, and 2 Buttons. The bar to contain a users name, one button to search for the new user, and another to add this new user to a list of people that you are currently following. The above image depicts some strings I have changed in fetchdata.java, as well as the one below.
 
-<center>![listv3.PNG](https://cdn.steemitimages.com/DQmSZDHKtwLJynuQkkiX7RUs1ws3Q1utiuBwz7nzZ6PKtd8/listv3.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmSZDHKtwLJynuQkkiX7RUs1ws3Q1utiuBwz7nzZ6PKtd8/listv3.PNG)</center>
+![listv3.PNG](https://cdn.steemitimages.com/DQmSZDHKtwLJynuQkkiX7RUs1ws3Q1utiuBwz7nzZ6PKtd8/listv3.PNG)
 
 For the most part, these Strings were simply shortened, to make room for the new widgets, and you may feel free to arrange them in really any way you please, provided it is functional. That is about it that we have done in fetchdata, so lets carry on with the next pages.
 
 ## Changes/Additions: followers.java
 
 ![list5.PNG](https://cdn.steemitimages.com/DQmZypep8dGPGAX5sd8pkhQaLfWWKX1o9ao4MLk6hmjuHtb/list5.PNG)
-<center>[Screenshot](https://cdn.steemitimages.com/DQmZypep8dGPGAX5sd8pkhQaLfWWKX1o9ao4MLk6hmjuHtb/list5.PNG)</center>
 
 In the upper half of the image above, we see that we need to add in 2 new Buttons, as well as a public, static EditText, and String. These are made public and static to be used and reused across the application. Farther down in the onCreate(), we simply assign our variables to our widget addresses. In the next image, we implement two onClickListeners attached to our newly created buttons, like so.
 
-<center>![list6.PNG](https://cdn.steemitimages.com/DQmSK6RGXVFimGCpwhGYHovHnJ8gEe1Kqk8wgpNjK9CMHp4/list6.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmSZDHKtwLJynuQkkiX7RUs1ws3Q1utiuBwz7nzZ6PKtd8/listv3.PNG)</center>
+![list6.PNG](https://cdn.steemitimages.com/DQmSK6RGXVFimGCpwhGYHovHnJ8gEe1Kqk8wgpNjK9CMHp4/list6.PNG)
 
 The first listener, is attached to our 'searchButton', and for that, we simply copy and paste the process from above into this listener, as all we really need to do is the same as before, with a new username. Our variable makes this rather simple. Followbutton, is a bit more of a step, where we will actually be launching a new activity. ^_^ This is also where we will be sending some Intent Data. Code Follows.
 
@@ -80,8 +77,7 @@ In the code snippet above, we first set a listener. Next we set our 'userName' S
 
 ## New Activity: FollowersList.java
 
-<center>![list7.PNG](https://cdn.steemitimages.com/DQmdJTNPwh4F6tvjyfY4UeAMx8733omNvhYFvL1ckSFzuqP/list7.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmdJTNPwh4F6tvjyfY4UeAMx8733omNvhYFvL1ckSFzuqP/list7.PNG)</center>
+![list7.PNG](https://cdn.steemitimages.com/DQmdJTNPwh4F6tvjyfY4UeAMx8733omNvhYFvL1ckSFzuqP/list7.PNG)
 
 Now this is a brand new addition to our application, so I'm not really gonna bother with the highlighting this time. Instead, I'm just going to break this down for you, section by section, and give you a clear understanding of whats going on. First off, we initialize our ListView, and our Public String.
 
@@ -90,8 +86,7 @@ Now this is a brand new addition to our application, so I'm not really gonna bot
 >&nbsp;&nbsp;&nbsp;&nbsp;ListView followList;
 &nbsp;&nbsp;&nbsp;&nbsp;public String[] test;
 
-<center>![listv4.PNG](https://cdn.steemitimages.com/DQmSi3ZcEd725Aqw4QFjgpVstHmybUZ6Y8i4xHRGGh1mbab/listv4.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmSi3ZcEd725Aqw4QFjgpVstHmybUZ6Y8i4xHRGGh1mbab/listv4.PNG)</center>
+![listv4.PNG](https://cdn.steemitimages.com/DQmSi3ZcEd725Aqw4QFjgpVstHmybUZ6Y8i4xHRGGh1mbab/listv4.PNG)
 
 
 In the snippet of code below, we first set the address of our 'followlist' to the Listview contained in our FollowersList.java file. In the next line we create a Bundle, which is used to store the data that is sent along with an Intent, and we retrieve any incoming data.
@@ -119,8 +114,7 @@ In the code above, we create a new list adapter, and set its value to a new Cust
 
 You will need to implement a new layout file, consisting of a horizontal LinearLayout, as well as a TextView, and a Button. This is rather simple, and the XML code can be found through the github link below. This layout file, will be used  over and over for each row, or piece of data displayed in your ListView. 
 
-<center>![listrow.PNG](https://cdn.steemitimages.com/DQmPHswDfNXVMh6UAokCRXSC8ccUNzTYtR4DbtP5E2jzR4E/listrow.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmPHswDfNXVMh6UAokCRXSC8ccUNzTYtR4DbtP5E2jzR4E/listrow.PNG)</center>
+![listrow.PNG](https://cdn.steemitimages.com/DQmPHswDfNXVMh6UAokCRXSC8ccUNzTYtR4DbtP5E2jzR4E/listrow.PNG)
 
 This is a very quick file, and we will not be spending much time discussing it. Just know, that this is the design for each your in your list. You can choose to include more TextViews for more data to be displayed, or an ImageView, whatever pleases you really, but for the means of this tutorial, you will simply need one TextView, and one Button.
 
@@ -136,8 +130,7 @@ We need to create a new class file for this. You can go ahead and do that now. T
 
 Finally, we set the context of our adapter,  the layout file that we will be using for our custom row, and the name of the array that we would like to pass in. The last thing we will need to do in this tutorial, is override one major operation of our ArrayAdapter Class. This method is the getView() function, and is what will be used to get our custom view, and handle the widgets within it. Code is as follows.
 
- <center>![listv5.PNG](https://cdn.steemitimages.com/DQmakBwEZzcakzk2XJamBCFnXreKZEky6LqK1SWdWb7ff8k/listv5.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmakBwEZzcakzk2XJamBCFnXreKZEky6LqK1SWdWb7ff8k/listv5.PNG)</center>
+ ![listv5.PNG](https://cdn.steemitimages.com/DQmakBwEZzcakzk2XJamBCFnXreKZEky6LqK1SWdWb7ff8k/listv5.PNG)
 
 The getView() Function can be overridden by going to Menu>Code>Generate, or pressing Alt+Insert. As you can see in the following two lines of code, which come immediately at the start of our getView(), our first line creates a LayoutInflater 'inflater', and set it to the current context. The second line, creates a new View, 'customView', and inflates it, using the layout file 'R.layout.followers', or followers.xml. The second bit of data included in this function, is a boolean set to false, representing that this is not the root layout.
 
@@ -164,12 +157,14 @@ Well that is it for this tutorial guys! I will carry on just to show you around 
 
 There is still much to be done, as you can probably see from the following images, this Custom ListView activity that we have created, does not retain its memory once we have left the activity. At its current state, we are only able to retain user data provided we are within the activity. This can be solved numerous ways, from SavedPreferences(), to an SQLite database, though it is nearing 6 AM here, and I would much like to wrap this up for now. That will be explained in an upcoming tutorial.
 
+![list4.PNG](https://cdn.steemitimages.com/DQmS7KADZzjbbST18ZXm3keGPCiqvXYGKmLDUR7TUQtXtRc/list4.PNG)![list3.PNG](https://cdn.steemitimages.com/DQmPLAkhSPn1mxp5JcVVUVps5EZcshKz4tQaguaQosCHGCx/list3.PNG)
+
 I hope this has been an informative read for you all, and that I managed to explain all of my changes in detail, and did not confuse you to much. From a tutorial standpoint, I really should be giving these examples in a fresh application each time. We will start doing that eventually, but I really am enjoying working on this current application, and I hope you have been as well.
 
 Happy Hunting,
 Cerulean
 
-![list4.PNG](https://cdn.steemitimages.com/DQmS7KADZzjbbST18ZXm3keGPCiqvXYGKmLDUR7TUQtXtRc/list4.PNG)![list3.PNG](https://cdn.steemitimages.com/DQmPLAkhSPn1mxp5JcVVUVps5EZcshKz4tQaguaQosCHGCx/list3.PNG)
+
 
 #### Curriculum
 This is the 3rd release in this series.
