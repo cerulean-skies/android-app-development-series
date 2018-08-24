@@ -347,4 +347,384 @@ Include a list of related tutorials you have already shared on Utopian that make
 
 
 #### Proof of Work Done
-Insert here the full u
+https://github.com/cerulean-skies/android-app-development-series/blob/master/Series%20%234.md
+
+################        ################   FULL CODE BELOW     ################    FULL CODE BELOW    ###############  ##############         
+## Changes: MainActivity.java
+
+```
+package com.example.smiey.steemie;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.content.DialogInterface.OnClickListener;
+
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button buttonBrowse = (Button)findViewById(R.id.buttonBrowser);
+        Button buttonFollowers = (Button)findViewById(R.id.buttonFollow);
+        Button testbutton = (Button)findViewById(R.id.button3);
+
+
+        buttonBrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent LaunchBrowser = new Intent (MainActivity.this, browser.class);
+                startActivity(LaunchBrowser);
+            }
+        });
+
+        buttonFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent LaunchFollowers = new Intent (MainActivity.this, followers.class);
+                startActivity(LaunchFollowers);
+            }
+        });
+
+        testbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent testI = new Intent (MainActivity.this, BGTesting.class);
+                startActivity(testI);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+```
+
+## New: BGTesting.java
+
+```
+package com.example.smiey.steemie;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+public class BGTesting extends AppCompatActivity {
+    ListView CurationList;  // ListView to display data
+    Button go;  // Button to launch/refresh
+    CustomCurationAdaptor adapter;
+    public String[] listItem; // String Array to contain list of data to display
+    String s3; // This string needs to be accessible in all functions/classes here.
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bgtesting);
+
+        CurationList = (ListView)findViewById(R.id.postLISTVIEW);  // Initialize views
+        go = (Button)findViewById(R.id.testButton);
+
+        go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new testGetUserData().execute();
+            }
+        });  // onclick
+
+    }
+
+    public class testGetUserData extends AsyncTask<Void,Void,Void> { // This class will run in background,
+
+        ProgressDialog p = new ProgressDialog(BGTesting.this); // A simple Dialog that displays progress of function.
+
+        @Override
+        protected Void doInBackground(Void... voids) { //Code to run in BG
+            try {
+                Document doc = Jsoup.connect("https://utopian.rocks/queue").get(); //Doc contains HTML data from Jsoup
+                Elements element = doc.select("div[class=contribution]"); // This tag will get us all post data
+
+                listItem = new String[element.size()]; // initialize our list, to the size of the element
+
+                for (int i=0; i<element.size(); i++){ // For each element, loop following code
+                    String s = element.get(i).text() + "\n"; // String 's' contains the text of our elements.
+                    getUsernamesFromElement(s, i); // This function will be explained below.
+                }
+
+            }catch (Exception e){e.printStackTrace();} //Simple catch block
+            return null;
+        }
+
+        public void getUsernamesFromElement(String s, int i){ //This function is used to cut up the elements,
+            String ss = s.substring(0,20); // into substrings that are easier to work with. 'ss' contains the first 20 characters.
+            String[] ss1 = ss.split(" ", 3); // ss1[1] now contains username, as we split the text at " ".
+
+            String testTitle[] = s.split(" ", 3);  // String array testTitle = entire element split in " ".
+            String title = testTitle[2]; // Post Title now contained in string title.
+            String subTitle = title.substring(0,30); // Shorten the title, so as to not flood display. url should be
+                                                         //length of 31 characters, = 'https://steemit.com/utopian-io'
+            String urls[] = s.split(" ", 4); // Gather Url from element.
+            String finalURL = urls[2]; // URL contained within finalURL
+
+            try { //Make a new connection, with the url from the current element.
+                Document doc1 = Jsoup.connect(finalURL).userAgent("Mozilla").get(); //store new page data
+                Elements postValuess = doc1.select("span[class=voting__inner]"); //this tag will find you the post value
+                String s1 = postValuess.get(0).text() + "\n"; // s1 now contains post value data
+                String[] s2 = s1.split(" ", 2); // String Array ontaining split element.
+                s3 = s2[0]; //s[2] = dollar amount of post value with dolar sign
+
+            } catch (IOException e) {e.printStackTrace();} //catch blah
+
+             listItem[i] = ss1[1] + "\n" + subTitle + "   " + s3 + "\n"; // Assemble each item in the order to display in list.
+
+        }
+
+
+
+        public boolean saveData(String[] array, String arrayName, Context ctex){ //Method to save our array to SharedPreferences
+            SharedPreferences prefs = ctex.getSharedPreferences("ArrayData", 0); //open file
+            SharedPreferences.Editor editor = prefs.edit(); //new editor
+            editor.putInt(arrayName +"_size", array.length); //maintain size of array for integrity
+            for(int i=0;i<array.length;i++) // for i in array,
+                editor.putString(arrayName + "_" + i, array[i]); //input string
+            return editor.commit();//final save
+        }
+
+
+        public String[] loadArray(String arrayName, Context mContext) { // Method to load array from SharedPreferences
+            SharedPreferences prefs = mContext.getSharedPreferences("ArrayData", 0); //open
+            int size = prefs.getInt(arrayName + "_size", 0); //get size
+            String array[] = new String[size]; //create new array of same size
+            for(int i=0;i<size;i++) //for element in array/size
+                array[i] = prefs.getString(arrayName + "_" + i, null); //add string
+            return array;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) { // the final steps to our Async Task
+            super.onPostExecute(aVoid);
+            saveData(listItem, "Urls", BGTesting.this); //save array to preferences
+            adapter = new CustomCurationAdaptor(BGTesting.this, listItem); //implement new adapter
+            CurationList.setAdapter(adapter); //atach list to adapter
+            p.dismiss(); //end of progress, so end of dialog
+        }
+
+
+
+        @Override
+        protected void onPreExecute() { //this is the pre execution cycle of AsyncTask,
+            super.onPreExecute();
+
+            p.setTitle("Curation Hounds Released"); //and we will use it to set up our progressDialog // title to display
+            p.setMessage("Please wait while we sniff out some awesome posts for you!"); //message to display
+            p.setIndeterminate(false); // used for setting progress amounts. not necessary here.
+            p.show(); //show dialog
+        }
+    }
+}
+```
+## New: CustomCurationAdapter.java
+```
+package com.example.smiey.steemie;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class CustomCurationAdaptor extends ArrayAdapter<String> {
+
+    public TextView singleTV; //views need to be publicly accessible.
+    public ImageView unfollow;
+
+    public CustomCurationAdaptor(@NonNull Context context, String[] items1) { //constructor is required.
+        super(context, R.layout.curation_tool_row, items1); //context of application, custom layout file, and array of items
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) { // function to display data to
+        LayoutInflater inflater = LayoutInflater.from(getContext()); //the custom view that we have created
+        View customView = inflater.inflate(R.layout.curation_tool_row, parent, false); //attach to custom layout
+
+        String singleItem = getItem(position); //singleItem= item at position in list/array
+
+        String[] sf = singleItem.split("\n", 2); //split string at newLine
+        int x = sf[0].length(); // int x = length of first split ^, or username
+        int y = singleItem.length(); //y = length of rest
+
+        String[] xx = singleItem.split(" ", 2); //split at " "
+        int zz = xx[1].length(); // int zz = length of dollar amount
+
+        SpannableString ss = new SpannableString(singleItem); //spannable string allows us to create nice strings
+        ss.setSpan(new RelativeSizeSpan(1.1f),0,x,0); //set size of username larger
+        ss.setSpan(new ForegroundColorSpan(Color.BLUE),0,x,0); //color username blue
+        ss.setSpan(new RelativeSizeSpan(0.8f),x,y-zz,0); // shrink size of url
+
+        ss.setSpan(new RelativeSizeSpan(1.1f),y-zz,y,0 ); // enlarge text of dollar amount
+
+
+        singleTV = (TextView) customView.findViewById(R.id.userDataCURATIONROW); //assign to our custom views
+
+        unfollow = (ImageView) customView.findViewById(R.id.steemlogoCURATIONROW);
+        unfollow.setImageResource(R.drawable.steemlogo); //set resource for each item
+
+        singleTV.setText(ss); //set text to spannable string
+
+        return customView;
+
+    }
+}
+```
+
+## Changes : activity_main.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="255dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/steemlogo" />
+
+    <Button
+        android:id="@+id/buttonFollow"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/buttonBrowser"
+        android:text="following" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button5"
+        android:text="Curation Tool" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/buttonFollow"
+        android:text="NOT YET" />
+
+    <Button
+        android:id="@+id/buttonBrowser"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="6dp"
+        android:text="BROWSER" />
+</RelativeLayout>
+```
+
+## New: BGTesting.XML
+```
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BGTesting">
+
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="17dp"
+        android:background="#100e0e"
+        android:text="Refresh Utopian Curation Subjects"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/postLISTVIEW"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
+```
+
+## New: curation_tool_row.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <ImageView
+        android:id="@+id/steemlogoCURATIONROW"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:padding="0dp"
+        android:paddingBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="0dp"
+        app:srcCompat="@drawable/steemlogo" />
+
+    <TextView
+        android:id="@+id/userDataCURATIONROW"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="4"
+        android:text="Poster Data:"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+</LinearLayout>
+```
