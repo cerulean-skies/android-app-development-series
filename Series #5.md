@@ -171,7 +171,7 @@ So,  as you can see from the code, and the image above, we will be overriding th
 After this, in lines 3 and 4, we do the exact same thing, but for a new ObjectAnimator 'ShrinkAnimator', and design that animation to shrink from the floating point value of the width of the view, all the way back down to 0. This too has a Duration that is set in line 4. Line 5 is responsible for the delay, between run and drawing of the animation. FInally, in the last line of code,we tell our AnimatorSet 'growShrinker' to first play the animation GrowAnimator, and then to subsequently play our ShrinkAnimator animation.
 
 This is pretty much it for this tutorial, you are nearing the end! :) However we must do one last thing before we can run our application, and that is overriding the onTouchEvent() method of our View class. This method will be called on every single touch applied to the view, and we will use it to initialize our animation. Go ahead and overide this function now like we did above with the onSizeChanged() method.
-
+```
 @Override
 public boolean onTouchEvent(MotionEvent event) {
     if (event.getActionMasked() == MotionEvent.ACTION_DOWN) { //When user presses down on screen
@@ -189,7 +189,7 @@ public boolean onTouchEvent(MotionEvent event) {
         }
     return super.onTouchEvent(event);
 }
-
+```
 <center>![anim6.PNG](https://cdn.steemitimages.com/DQmQE18FePapshSRzzBaptf57V8iE7pwMtU4GopnNrnyPjC/anim6.PNG)</center>
 
 So, lets break down this final bit of code above us. The first three lines of this segment, are an If Statement of their own. This statement states that IF the user has pressed down on the screen, within the location of the view, that we are to get the location of the X and Y axis of the touch, and save them each to their own Integer Variable. 
