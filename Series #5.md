@@ -222,5 +222,229 @@ Cerulean.
 - [Android App Development Series #1 - Basic Web Browser
 ](https://steemit.com/utopian-io/@ceruleanblue/android-app-development-series-1-basic-web-browser)
 
-#### Proof of Work Done
-Insert here the full url of the code used in the tutorial, under your GitHub or a relevant gist, e.g. htt
+
+######### FULL CODE BELOW ######### FULL CODE BELOW ######### FULL CODE BELOW ######### FULL CODE BELOW ######### FULL CODE BELOW
+
+## MainActivity.java
+
+```
+package com.example.smiey.testgraphics;
+
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+
+/**
+ * Demonstrates property animation with ObjectAnimator and AnimatorSet.
+ * Shows an expanding and contracting circle.
+ */
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button b = (Button)findViewById(R.id.button);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), Main2Activity.class);
+                startActivity(i);}
+        });
+    }
+}
+```
+
+## Main2Activity.java
+
+```
+package com.example.smiey.testgraphics;
+
+
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
+public class Main2Activity extends AppCompatActivity {
+
+    ImageView i;
+    private AnimatorSet Slider = new AnimatorSet(); // Initialize our variable references
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+
+        i = (ImageView)findViewById(R.id.imageView2);
+        i.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveWidget(i); //moveWidget is a function that we will use to move our widget.
+            }
+        });
+    }
+
+    public void moveWidget(View view){
+        ObjectAnimator AnimateRight = ObjectAnimator.ofFloat(view, "translationX", 400f);
+        //ObjectAnimator will be moved, using a Translation on its X axis, to a position of 400(Float)
+        AnimateRight.setDuration(1500); //The duration will be 1500 ms
+        ObjectAnimator AnimateLeft = ObjectAnimator.ofFloat(view, "translationX", 0f);
+        AnimateLeft.setDuration(1500);
+        Slider.play(AnimateRight).before(AnimateLeft); //Slider is an AnimatorSet,
+        // and can be used to link animations together
+        Slider.start();
+    }
+}
+
+```
+
+## AnimationTest.java
+
+```
+package com.example.smiey.testgraphics;
+
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+
+public class AnimationTest extends View {
+
+    private static final int ANIMATION_DURATION = 4500;
+    private static final long ANIMATION_PAUSE = 300;
+
+    private float intX;
+    private float intY;
+    private float floatRadius;
+
+    private final Paint newPaint = new Paint();
+    private AnimatorSet growShrinker = new AnimatorSet();
+
+
+
+    public AnimationTest(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+
+    public void setRadius(float radius) {
+        floatRadius = radius;
+        newPaint.setColor(Color.MAGENTA );
+        invalidate(); //Invalidate the drawing, so as to redraw.
+    }
+
+    @Override
+    public void onSizeChanged(int w, int h, int oldw, int oldh) {
+        // This method will be called when the size of the view is changed, even during initialization.
+
+        //GrowAnimator will create a growing circle from the value of 0, to the radius of the width of the view
+        ObjectAnimator growAnimator = ObjectAnimator.ofFloat(this, "radius", 0, getWidth());
+        growAnimator.setDuration(ANIMATION_DURATION); //the duration of the animation
+
+        //This ShrinkAnimator will create a shrinking circle, from the value of the radius of the width of the view, to 0
+        ObjectAnimator shrinkAnimator = ObjectAnimator.ofFloat(this,
+                "radius", getWidth(), 0);
+        shrinkAnimator.setDuration(ANIMATION_DURATION);
+        shrinkAnimator.setStartDelay(ANIMATION_PAUSE); //time before animation starts.
+
+        //AnimatorSet growShrinker will play the growth animation first, then the shrinker
+        growShrinker.play(growAnimator).before(shrinkAnimator);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+    if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+
+        // Integers for the Location of Circle's Center = location of x,y at touch
+        intX = event.getX();
+        intY = event.getY();
+        // If animation is running, Cancel it so as to ensure only one animation can run at one time
+        if (growShrinker != null && growShrinker.isRunning()) {
+            growShrinker.cancel();
+        }
+        // Start the animation sequence.
+        growShrinker.start();
+    }
+    return super.onTouchEvent(event);
+    }
+
+
+
+
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawCircle(intX, intY, floatRadius, newPaint);
+    }
+
+}
+
+```
+
+## activity_main.xml
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0f0f0f"
+    tools:context=".MainActivity">
+
+    <com.example.smiey.testgraphics.AnimationTest
+        android:layout_width="303dp"
+        android:layout_height="392dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/holo_blue_dark"
+        android:text="Continue" />
+</RelativeLayout>
+```
+
+## activity_main2.xml
+
+```
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1b1a1a"
+    tools:context=".Main2Activity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="108dp"
+        android:layout_height="127dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="120dp"
+        app:srcCompat="@drawable/steemlogo" />
+</RelativeLayout>
+```
