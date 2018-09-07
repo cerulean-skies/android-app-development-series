@@ -22,13 +22,8 @@ State the requirements the user needs in order to follow this tutorial.
 #### Tutorial Contents
 # <center>Introduction</center>
 
-<center>![android.png](https://cdn.steemitimages.com/DQmXK9ENtibhGCrqyqha327bXMwbk3EzzUp5enX8jucjCJH/android.png)
-<br>[Self-Generated Image](https://cdn.steemitimages.com/DQmXK9ENtibhGCrqyqha327bXMwbk3EzzUp5enX8jucjCJH/android.png)</center>
 
 Hello Steemians :] I hope you guys have been having a solid week so far, as it has been quite an adventure for me. My harddrive was near death, and after about a good 30 hours of 'chkdsk'ing, and more, I seem to have bought it a little more time :) This also means I can get back to writing, so I am very excited to be making this tutorial, as it has been quite the dull week so far! In our tutorial today, we will be taking a look at the 'SteemJ' Java Library. 
-
-<center>![steemJ.PNG](https://cdn.steemitimages.com/DQmcQsaDUXnXAY7VB52i5iJUrXr37M1LKC9Ebcf2XhpsC1o/steemJ.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmcQsaDUXnXAY7VB52i5iJUrXr37M1LKC9Ebcf2XhpsC1o/steemJ.PNG)</center>
 
 
 This Library is quite powerful, though I must admit it is not the most advanced one I have seen so far. Regardless, most of the major operations on the blockchain can be accomplished using this single library in your application. So far in our tuts, we have done things like request JSON data from the Steemit Website, but today we will be doing much deeper operations than that. The SteemJ Library interacts directly with the blockchain, giving you much more power, like the ability to create 'custom operations'.
@@ -39,9 +34,6 @@ Allright guys, so the first thing we will need to do, is create a new project fo
 
 These two classes will be where the majority of our code is done, as near all of these operations cannot be run on the Main UI Thread. We will get to them shortly, but for now lets set up our home page activity. As you will see in the image below, there are quite a few widgets we will need to add to this page to get everything done in a clear and explanatory way. (Many of the functions you will see in this tut, can be used far more effectively within the code, but I have chosen to force the user to input certain bits of data, so that it can be clear what we are doing with our operations. 
 
-<center>![Steemfollow.PNG](https://cdn.steemitimages.com/DQmSWcsFmk91qLETdkSRy6vgjCUGhhMPJaBkhzvpa97MGsr/Steemfollow.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmSWcsFmk91qLETdkSRy6vgjCUGhhMPJaBkhzvpa97MGsr/Steemfollow.PNG)</center>
- 
 So, like mentioned above, for this activity, we will need numerous widgets to be added. As usual, the XML Layout files for each activity can be found through the link below, but just to go over it quickly, we will need 2 EditTexts, for inputting Username and Permlink data, as well as 6 buttons. Of these Buttons, 2 are responsible for Voting/Unvoting, 2 for Following/Unfollowing, and 2 further buttons, that will link to our other activities, where we will handle posting, etc.
 
 Once you have your layout set up like mine, we can get down to the code. In HomePage.java, we will Simply be setting up a lengthy amount of onClickListeners. Before this, we will need to initialize all of our views as variables, so as to refer to them during run.
@@ -77,9 +69,6 @@ unfollowB.setOnClickListener(new View.OnClickListener() {
 });
 ```
 As you can see from the segment of code above, we have set up 2 onClickListeners, and attached them to our 'Follow', and 'Unfollow' buttons. Inside of these listeners, the code is quite similar between them, but with slight important variances so be sure to pay attention to what is happening. These two Listeners are exactly the same as each other, both creating a String Array, and storing the value of our TextView, at the time of Click. 
-
-<center>![LISTENERS.PNG](https://cdn.steemitimages.com/DQmSvhdxHQ39PvZQTEWnBnsRZSQTZW4usKZEXGCD83eUc39/LISTENERS.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmSvhdxHQ39PvZQTEWnBnsRZSQTZW4usKZEXGCD83eUc39/LISTENERS.PNG)</center>
 
 Next our Following class will be executed. Most of the work is handled there, but for now, we will simply pass in our String Array 'strings'. Now lets go ahead and set up the next two Buttons, which will be responsible for handling our Voting functions.
 
@@ -168,8 +157,6 @@ So lets break this previous segment down into a few parts, so as to make it simp
 
 For the purposes of this tutorial, I will be using a secondary account of mine, which is used to upload gaming clips by me and my lady :) It is not a very active account, and will only be used in lieu of using my own. The following image details the prerequisite lines of code required, and can be viewed more in depth at [This Link.](https://github.com/marvin-we/steem-java-api-wrapper/wiki/Operations)
 
-<center>![steemj2.PNG](https://cdn.steemitimages.com/DQmS7m9y1MtWrFffKhPw7H9J1eZtsmyMcwBehu31xbpMniG/steemj2.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmWDAt5tXoGT8xgAaYF1wqEmeTm9ERP4TigfpbMa85VkUh/SteemFollow1.PNG)</center>
 
 The next four 'prerequisite' lines of code, are responsible for creating a SteemJ Object, an Immutable Pair list containing our private keys, and finally assigning our keys to our configuration instance. I will not be explaining those again, or much further, as that is another persons work, and all info needed can be found in the link provided above. 
 
@@ -186,9 +173,6 @@ Once we have set up our 6 required lines, we will finally implement our Follow O
 https://www.youtube.com/watch?v=oTiHWjPJz1o&list=PLw7vrgO9rBMz78vwUcOgtYKq1qJGHE8Pn&index=2
 
 As I mentioned earlier, each class is allowed to use Sub-Classes, and we will be using one here, in order to handle the Unfollow functions of our account. This class is executed when our 'Unfollow' Button is clicked.  You will see that this class, is quite similar to the Following Class, however instead of a Follow SteemJ Operation, we will be using the 'Unfollow' Operation. The format for this function can be seen in the image below.
-
-<center>![unfollow.PNG](https://cdn.steemitimages.com/DQmcA6wUArvSZuTQGKUgSbaTf52QZhFGKaDtyParw7ftekc/unfollow.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmcA6wUArvSZuTQGKUgSbaTf52QZhFGKaDtyParw7ftekc/unfollow.PNG)</center>
 
 Aside from this, just like the rest of our Classes, our unfollow class will be extended from AsyncTask, so as to be run in a background thread. We will also need to implement the 6 Prerequisite lines of code, in order to be able to use the operations from the SteemJ Library. This will be done within each class that uses a SteemJ Operation. I will include a code segment, as well as an image of my code below, though there will be very little difference from our Follow Class.
 
@@ -224,9 +208,6 @@ Aside from this, just like the rest of our Classes, our unfollow class will be e
 
 It should be mentioned, that it is best practice to store these functions within Try/Catch blocks, as catching any form of error should the RPC node be down, etc will stop our application from crashing. This Class, is a very simple subclass, requiring the exact same data, the username to be fed through the String Array. 
 
-<center>![unfollowd.PNG](https://cdn.steemitimages.com/DQmf4RDq6q1LdC5FG63BNbXWvMq3AHCSsYqeDaoMoVSUoTB/unfollowd.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmf4RDq6q1LdC5FG63BNbXWvMq3AHCSsYqeDaoMoVSUoTB/unfollowd.PNG)</center>
-
 ## <center>Voting Class: Voting.java</center>
 
 https://www.youtube.com/watch?v=bDntI-YaZ7o&list=PLw7vrgO9rBMz78vwUcOgtYKq1qJGHE8Pn&index=3
@@ -256,9 +237,6 @@ public class Voting extends AsyncTask<String, Void, Void> {
 ```
 
 In the above segment, we can see our Voting class,  where we handle all Upvote Operations given by user. We use the Upvote Operation, and pass several bits of required data into it. Our String Array contains both the Username of the Post Creator, as well as the Permlink of the Post. FInally, we use an integer to represent the full weight that we would like to assign to the given Vote. 
-
-<center>![voting.PNG](https://cdn.steemitimages.com/DQmfXJFXgukZaN28zcnJKryzUs3UaLEVizg8QsZDrFsfdgw/voting.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmfXJFXgukZaN28zcnJKryzUs3UaLEVizg8QsZDrFsfdgw/voting.PNG)</center>
 
 ## <center>Unvote Sub-Class: Voting.java</center>
 
@@ -290,9 +268,6 @@ One more time just like above, the same information will be fed to this process.
 
 
 ## Posting/Deleting Posts - PostEditor.java
-
-<center>![posting.PNG](https://cdn.steemitimages.com/DQmeR17g5fUT4MWUQj1N3RD4MefbpKwheUvdV5y9GnSEBho/posting.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmfXJFXgukZaN28zcnJKryzUs3UaLEVizg8QsZDrFsfdgw/voting.PNG)</center>
 
 So, for the Posting portion of this application, we will need to use a new activity, one which I have chosen to name 'PostEditor.java', and you may do the same. In this activity, we will implement 3 EditTexts, as well as 2 Buttons. The EditTexts will be for obtaining the title of the article, the body of the article, as well as a 3rd EditText that will obtain the Permlink, necessary for removing the post from the chain. The two buttons will be for post creation, as well as deleting the posting. XML code can be found, as always via the github link below. Now lets get into the onCreate function of our PostEditor.
 
@@ -355,9 +330,6 @@ In the code above, smack in the middle of our doInBackground method, we will be 
 
 We also implement a final string array in the preceding operation, so as to store our tags, which for some reason I chose not to include, though I really wish I had something to show you guys now. Either way it is a good test of your skills I guess, perhaps see if you can implement an EditText in order to acquire tags from a user. Next up is our DeletePost Class.
 
-<center>![posting1.PNG](https://cdn.steemitimages.com/DQmPXzhXHYcHCjyuM675bu9m6ucuqWyNs5wTV5atmJnQzSz/posting1.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmPXzhXHYcHCjyuM675bu9m6ucuqWyNs5wTV5atmJnQzSz/posting1.PNG)</center>
-
 
 ## <center>DeletePost Sub-Class - Posting.java</center>
 
@@ -387,9 +359,6 @@ class DeletePost extends AsyncTask<String, Void, Void> {
 ```
 
 ## Commenting/Deleting Comments - CommentEditor.java
-
-<center>![following.PNG](https://cdn.steemitimages.com/DQmQWE7zFCSoW64R5xBn5oS1K2u44FFjYzeAwZWLW68ks4B/following.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmfXJFXgukZaN28zcnJKryzUs3UaLEVizg8QsZDrFsfdgw/voting.PNG)</center>
 
 Finally, we have reached the last segment of this tutorial, which is where we will be creating one final activity. This activity in my project, has been named CommentEditor.java, and the layout is quite similar to our PostEditor's layout file, being that it again consists of 3 TextViews, as well as 2 Buttons. 
 
@@ -423,9 +392,6 @@ delete.setOnClickListener(new View.OnClickListener() {
 Like in the previous PostEditor Activity, we first initialize our TextViews and Buttons, followed by attaching two Listeners to our Buttons. The first of these listeners, executes our Commenting AsyncTask, passing in the body of the comment, followed by the name of the author of whoever wrote the post or article that you are attempting to comment on.
 
 The 3rd element passed into our 'CommentDetails' string array, is the permlink of the parent article mentioned which you are commenting on.The second listener, passes the same information through to our DeleteComment() AsyncTask Class, though we really only need the permlink of the comment, which is stored at location [2] of our CommentDetails array. (I have realized at this point, this second class is unneccessary, as the DeletePost Class could be used here instead, however it is a good teaching example so I will leave it in. ^_^ Be smarter than me and waste less time! )
-
-<center>![comment1.PNG](https://cdn.steemitimages.com/DQmfS61x6A1c3KN9wjeVYKF88ZWFK8Yf56wqNVWoHiKhs4i/comment1.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmT1z5FqbPCj9UWmQsEz7iMckZQ3NWWiNKJgKVbyy6n7gf/Comment.PNG)</center>
 
 ## <center>Commenting Class - Commenting.java</center>
 
