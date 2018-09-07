@@ -160,13 +160,8 @@ For the purposes of this tutorial, I will be using a secondary account of mine, 
 
 The next four 'prerequisite' lines of code, are responsible for creating a SteemJ Object, an Immutable Pair list containing our private keys, and finally assigning our keys to our configuration instance. I will not be explaining those again, or much further, as that is another persons work, and all info needed can be found in the link provided above. 
 
-<center>![follow.PNG](https://cdn.steemitimages.com/DQmaaaziK6vfT2x4x3i5QM432NftZ3uknhct6sgcDpezL5e/follow.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmaaaziK6vfT2x4x3i5QM432NftZ3uknhct6sgcDpezL5e/follow.PNG)</center>
-
 Once we have set up our 6 required lines, we will finally implement our Follow Operation. This is done quite simply, using 'steemJ.follow(new AccountName(strings[0]));'. The String Array 'strings' was passed in from our HomePage activity, and contains the username of the user we would like to follow, at position 0.
 
-<center>![SteemFollow1.PNG](https://cdn.steemitimages.com/DQmWDAt5tXoGT8xgAaYF1wqEmeTm9ERP4TigfpbMa85VkUh/SteemFollow1.PNG)
-<br>[Screenshot](https://cdn.steemitimages.com/DQmWDAt5tXoGT8xgAaYF1wqEmeTm9ERP4TigfpbMa85VkUh/SteemFollow1.PNG)</center>
 
 ## <center>Unfollow Sub-Class: Following.java</center>
 
