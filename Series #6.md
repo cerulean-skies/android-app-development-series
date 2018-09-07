@@ -470,4 +470,4 @@ This developer is also a Steemian, of course, and though I do not know much abou
 ](https://steemit.com/utopian-io/@ceruleanblue/android-app-development-series-1-basic-web-browser)
 
 #### Proof of Work Done
-Insert here the full url of the code used in the tutorial, under your GitHub or a relevant gist, e.g. https
+https://github.com/cerulean-skies/android-app-development-series/blob/master/Series%20%236.md
